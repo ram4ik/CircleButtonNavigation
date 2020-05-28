@@ -14,12 +14,20 @@ struct ContentView: View {
     
     var body: some View {
         ZStack {
-            Text("Hello SwiftUI")
+            menuVM.selectedMenu.menuView
             ZStack {
-                Color.black.opacity(self.isActivated ? 0.1 : 0)
+                Color.black.opacity(isActivated ? 0.2 : 0)
                 VStack {
                     Spacer()
-                    SelectedMenuButton(isActivated: self.$isActivated, menuItem: menuVM.selectedMenu)
+                    ZStack {
+                        ForEach(0..<menuVM.menus.count) { i in
+                            MenuButton(isActivated: self.$isActivated,
+                                       menuVM: self.menuVM,
+                                       currentItemIndex: i
+                            )
+                        }
+                    SelectedMenuButton(isActivated: $isActivated, menuItem: menuVM.selectedMenu)
+                    }
                 }
             }
         }
